@@ -1,0 +1,2787 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>W1 Consultoria: Planejamento Estratégico – VIA BRASIL S.A</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Montserrat:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        /* Cores (Mantidas do design original) */
+        --primary-color: #0d1b2a;
+        --secondary-color: #00cec9; /* Teal / Ciano - W1 Global Accent */
+        --accent-color-dark-theme: #1e293b; /* Azul escuro acinzentado */
+        --bg-dark-primary: #0d1b2a; /* Azul muito escuro (quase preto) */
+        --bg-dark-secondary: #1c2a3a; /* Azul escuro um pouco mais claro */
+        --bg-light-primary: #ffffff;
+        --bg-light-secondary: #f3f4f6; /* Cinza bem claro */
+        --text-light-primary: #f3f4f6;
+        --text-light-secondary: #a0aec0;
+        --text-dark-primary: #1a202c;
+        --text-dark-secondary: #4a5568;
+        --border-color-dark: #334155;
+        --border-color-light: #e2e8f0;
+
+        /* Sombras (Mantidas do design original) */
+        --card-shadow-dark: 0 4px 15px rgba(0, 0, 0, 0.2);
+        --card-shadow-light: 0 8px 20px rgba(0, 0, 0, 0.07);
+        --card-shadow-hover-light: 0 12px 28px rgba(0, 0, 0, 0.12),
+          0 5px 10px rgba(0, 0, 0, 0.1);
+        --card-shadow-hover-dark: 0 8px 25px rgba(0, 206, 201, 0.15),
+          0 4px 10px rgba(0, 206, 201, 0.1);
+
+        /* Fontes (Mantidas do design original) */
+        --font-primary: "Montserrat", "Segoe UI", Roboto, "Helvetica Neue",
+          Arial, sans-serif;
+        --font-secondary: "Lato", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+          sans-serif;
+
+        /* Cores para as barras do Gantt TIVA (ajustadas para 5 fases + suporte) */
+        --tiva-gantt-fase1-color: #a0d2db; /* Azul claro suave */
+        --tiva-gantt-fase2-color: #80b9ad; /* Verde azulado suave */
+        --tiva-gantt-fase3-color: #76c7c0; /* Teal mais claro */
+        --tiva-gantt-fase4-color: #5eaaa8; /* Teal médio */
+        --tiva-gantt-fase5-docs-color: #f3d5a5; /* Amarelo/Laranja claro para Fase de Documentação */
+        --tiva-gantt-ongoing-color: #bcaaa4; /* Marrom claro/Bege para suporte */
+
+        /* Cores para as barras do Gantt Celio Damasceno (NOVO) */
+        --cd-gantt-fase1-color: #a0d2db; /* Azul claro suave - Diagnóstico/Planejamento */
+        --cd-gantt-fase2-color: #80b9ad; /* Verde azulado suave - Legal/Societário */
+        --cd-gantt-fase3-color: #76c7c0; /* Teal mais claro - Operacional/Ativos */
+        --cd-gantt-fase4-color: #f3d5a5; /* Amarelo/Laranja claro - Governança/Documentos */
+        --cd-gantt-ongoing-color: #bcaaa4; /* Marrom claro/Bege - Suporte Contínuo */
+
+        /* Cores específicas para os pilares do NOVO organograma (Grupo Celio Damasceno) */
+        --new-organogram-secondary-color: #00796b; /* Verde escuro consistente para o novo organograma */
+        --new-holding-bg: #e3f2fd; /* Azul bem clarinho */
+        --new-holding-border: #90caf9;
+        --new-holding-title-text: var(--primary-color);
+        --new-holding-body-text: var(--text-dark-secondary);
+
+        --new-celinho-sa-bg: #e0f2f1; /* Verde bem clarinho (SA padrão) */
+        --new-celinho-sa-border: var(--new-organogram-secondary-color);
+        --new-celinho-sa-title-text: var(--primary-color);
+        --new-celinho-sa-body-text: var(--text-dark-secondary);
+
+        --new-celio-damasceno-sa-bg: #fff3e0; /* Laranja/Pêssego bem claro (Lucro Real) */
+        --new-celio-damasceno-sa-border: #ffcc80;
+        --new-celio-damasceno-sa-title-text: #bf360c; /* Laranja escuro */
+        --new-celio-damasceno-sa-body-text: #795548; /* Marrom claro */
+
+        --new-simples-op-bg: #e8f5e9; /* Verde Simples Nacional */
+        --new-simples-op-border: #4caf50;
+        --new-simples-op-title-text: #2e7d32; /* Verde escuro */
+        --new-simples-op-body-text: #388e3c; /* Verde médio */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: var(--font-secondary);
+        line-height: 1.6;
+        color: var(--text-light-primary);
+        background-color: var(--bg-dark-primary); /* Default body background */
+        overflow-x: hidden;
+      }
+
+      body.light-theme-override {
+        background-color: var(--bg-light-secondary);
+        color: var(--text-dark-primary);
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+      }
+      /* Ajuste para o container do novo organograma ser mais largo */
+      #kamby-grupo-organogram-slide .container {
+          max-width: 1300px;
+      }
+      #viabrasil-gantt .container { /* Ajuste para Gantt Chart usar largura máxima se necessário */
+        max-width: 1200px; /* Mantém consistência com o novo Gantt */
+      }
+
+
+      section {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 20px;
+        position: relative;
+        text-align: center;
+        background-color: var(--bg-dark-primary);
+        color: var(--text-light-primary);
+        border-bottom: 1px solid var(--border-color-dark);
+        overflow: hidden;
+      }
+
+      section.light-section {
+        background-color: var(--bg-light-primary);
+        color: var(--text-dark-primary);
+        border-bottom: 1px solid var(--border-color-light);
+      }
+      section.light-gray-section {
+        background-color: var(--bg-light-secondary);
+        color: var(--text-dark-primary);
+        border-bottom: 1px solid var(--border-color-light);
+      }
+      section:last-of-type {
+        border-bottom: none;
+      }
+
+      .capa-section {
+        background-color: var(--primary-color);
+        color: var(--text-light-primary);
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding-bottom: 60px;
+        border-bottom: none;
+      }
+      .capa-content {
+        position: relative;
+        z-index: 2;
+        max-width: 850px;
+        margin: 0 auto;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .logo-container-capa {
+        margin-bottom: 35px;
+      }
+      .logo-shape-capa {
+        width: 110px;
+        height: 110px;
+        margin: 0 auto;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgba(0, 206, 201, 0.1);
+        border: 2px solid var(--secondary-color);
+        border-radius: 22px;
+        transform: rotate(45deg);
+        box-shadow: 0 0 20px rgba(0, 206, 201, 0.25);
+      }
+      .logo-text-capa {
+        font-family: var(--font-primary);
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--text-light-primary);
+        z-index: 2;
+        transform: rotate(-45deg);
+      }
+      .logo-text-capa span {
+        color: var(--secondary-color);
+      }
+      .capa-slide-title {
+        font-family: var(--font-primary);
+        font-size: 2.8rem;
+        font-weight: 700;
+        margin-bottom: 20px;
+        line-height: 1.3;
+        color: var(--text-light-primary);
+      }
+      .capa-slide-title .highlight {
+        color: var(--secondary-color);
+      }
+      .capa-details {
+        font-family: var(--font-secondary);
+        font-size: 1.2rem;
+        color: var(--text-light-secondary);
+        margin-bottom: 35px;
+      }
+
+      .sectional-cover-slide {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background-color: var(--bg-dark-secondary);
+        min-height: 100vh;
+      }
+      .sectional-cover-slide .container {
+        align-items: center;
+      }
+      .sectional-cover-title {
+        font-family: var(--font-primary);
+        font-size: 3.2rem;
+        font-weight: 700;
+        color: var(--text-light-primary);
+        margin-bottom: 20px;
+        line-height: 1.2;
+        border-bottom: 4px solid var(--secondary-color);
+        padding-bottom: 15px;
+        display: inline-block;
+      }
+      .kamby-logo-container {
+        margin-bottom: 30px;
+        text-align: center;
+      }
+      .kamby-logo-image {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        border: 4px solid var(--secondary-color);
+        box-shadow: 0 0 20px rgba(0, 206, 201, 0.4);
+        object-fit: cover;
+      }
+      .kamby-company-name {
+        font-family: var(--font-secondary);
+        font-size: 1rem;
+        color: var(--text-light-secondary);
+        margin-top: 12px;
+        font-weight: 500;
+      }
+
+      h2.section-title {
+        font-family: var(--font-primary);
+        font-size: 2.6rem;
+        font-weight: 300; /* Alterado para 300 para o título geral, mas Gantt e Organograma podem sobrescrever */
+        color: var(--text-light-primary);
+        position: relative;
+        padding-bottom: 20px;
+        text-align: center;
+        width: fit-content;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 40px; /* Reduzido de 60px para slides de lista */
+      }
+      h2.section-title.on-light-bg {
+        color: var(--text-dark-primary);
+      }
+      h2.section-title::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 80px;
+        height: 4px;
+        background-color: var(--secondary-color);
+        border-radius: 2px;
+      }
+
+      .list-section-content ul {
+        list-style: none;
+        padding: 0;
+        max-width: 800px;
+        width: 100%;
+        margin: 0 auto;
+      }
+      .list-section-content li {
+        background-color: var(--accent-color-dark-theme);
+        color: var(--text-light-primary);
+        padding: 18px 25px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        box-shadow: var(--card-shadow-dark);
+        font-size: 1.05rem;
+        text-align: left;
+        display: flex;
+        align-items: flex-start;
+        border-left: 4px solid var(--secondary-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .list-section-content li::before {
+        content: "▸";
+        color: var(--secondary-color);
+        font-weight: bold;
+        display: inline-block;
+        margin-right: 12px;
+        font-size: 1.1em;
+        line-height: 1.6;
+        flex-shrink: 0;
+      }
+      .list-section-content li > span {
+        flex-grow: 1;
+      }
+
+      section.light-section .list-section-content li,
+      section.light-gray-section .list-section-content li {
+        background-color: var(--bg-light-primary);
+        color: var(--text-dark-primary);
+        box-shadow: var(--card-shadow-light);
+      }
+      section.light-section .list-section-content li strong::before,
+      section.light-gray-section .list-section-content li strong::before {
+        content: none; /* Remove default strong bullet if any */
+      }
+       section.light-section .list-section-content li strong,
+      section.light-gray-section .list-section-content li strong {
+        color: var(--text-dark-primary); /* Ensure strong text is dark on light bg */
+      }
+
+
+      .list-section-content li:hover {
+        transform: translateY(-5px) scale(1.02);
+      }
+      section:not(.light-section):not(.light-gray-section)
+        .list-section-content
+        li:hover {
+        box-shadow: var(--card-shadow-hover-dark);
+      }
+      section.light-gray-section .list-section-content li:hover,
+      section.light-section .list-section-content li:hover {
+        box-shadow: var(--card-shadow-hover-light);
+      }
+      .list-section-content h3 {
+        font-family: var(--font-primary);
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: var(--secondary-color);
+        margin-top: 30px;
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      section.light-section .list-section-content h3,
+      section.light-gray-section .list-section-content h3 {
+        color: var(--primary-color);
+      }
+      .list-section-content .intro-paragraph {
+        font-size: 1.1rem;
+        color: var(--text-light-secondary);
+        margin-bottom: 25px;
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: left;
+      }
+      .list-section-content .intro-paragraph.centered {
+        text-align: center;
+      }
+      section.light-section .list-section-content .intro-paragraph,
+      section.light-gray-section .list-section-content .intro-paragraph {
+        color: var(--text-dark-secondary);
+      }
+      .risk-summary-paragraph {
+        font-size: 1.15rem;
+        color: var(--text-dark-secondary);
+        margin: 15px 0;
+        padding: 0 10%;
+        text-align: justify;
+        line-height: 1.8;
+      }
+
+      #kamby-final-slide-3 .container { /* Applies to the Grupo Celio Damasceno institutional slide */
+        max-width: 1200px;
+      }
+      .institutional-content-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 40px;
+        width: 100%;
+        margin-top: 20px;
+      }
+      .institutional-text-content {
+        flex: 3;
+      }
+      .institutional-text-content .intro-paragraph {
+        max-width: 100%;
+        margin-left: 0;
+        margin-right: 0;
+        text-align: justify;
+        font-size: 1.05rem;
+        line-height: 1.7;
+        margin-bottom: 1em;
+      }
+      .institutional-text-content .intro-paragraph:last-child {
+        margin-bottom: 0;
+      }
+
+      .institutional-logo-column {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding-top: 10px;
+      }
+      .kamby-rectangular-logo { /* This class is used for the logo on slide 3 */
+        width: 100%;
+        max-width: 220px;
+        height: auto;
+        border: 3px solid var(--primary-color);
+        border-radius: 8px;
+        box-shadow: var(--card-shadow-light);
+      }
+      @media (max-width: 860px) {
+        .institutional-content-wrapper {
+          flex-direction: column;
+          align-items: center;
+        }
+        .institutional-text-content {
+          flex: none;
+          width: 100%;
+          margin-bottom: 30px;
+        }
+        .institutional-text-content .intro-paragraph {
+          text-align: left;
+        }
+        .institutional-logo-column {
+          flex: none;
+          width: 100%;
+          max-width: 200px;
+          padding-top: 0;
+        }
+      }
+
+
+      /* --- START: Organogram GRUPO CELIO DAMASCENO CSS --- */
+      #kamby-grupo-organogram-slide.organogram-section { /* Applies to the new organogram section */
+        background-color: var(--bg-light-secondary); /* Ensures light background */
+        color: var(--text-dark-primary);
+        padding: 50px 15px;
+        width: 100%;
+        border-radius: 12px; 
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); 
+      }
+
+      #kamby-grupo-organogram-slide .section-title { 
+        font-family: var(--font-primary);
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: var(--text-dark-primary);
+        position: relative;
+        padding-bottom: 20px;
+        text-align: center;
+        width: fit-content;
+        max-width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 60px;
+      }
+
+      #kamby-grupo-organogram-slide .section-title::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 100px;
+        height: 5px;
+        background-color: var(--new-organogram-secondary-color); 
+        border-radius: 2.5px;
+      }
+
+      #kamby-grupo-organogram-slide .organogram-container {
+        text-align: center;
+        width: 100%;
+        margin: 20px auto 0;
+      }
+
+      #kamby-grupo-organogram-slide .node {
+        background-color: var(--bg-light-primary);
+        border: 1px solid var(--border-color-light);
+        padding: 18px 22px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        margin: 10px;
+        min-height: 330px;
+        width: 100%;
+        max-width: 280px;
+        box-shadow: var(--card-shadow-light);
+        position: relative;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        text-align: left;
+      }
+      #kamby-grupo-organogram-slide .node:hover {
+        transform: translateY(-4px);
+        box-shadow: var(--card-shadow-hover-light);
+      }
+
+      #kamby-grupo-organogram-slide .node.pillar-holding {
+        background-color: var(--new-holding-bg);
+        border: 2px solid var(--new-holding-border);
+      }
+      #kamby-grupo-organogram-slide .node.pillar-holding h4 { color: var(--new-holding-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-holding p,
+      #kamby-grupo-organogram-slide .node.pillar-holding ul li { color: var(--new-holding-body-text); }
+      #kamby-grupo-organogram-slide .node.pillar-holding ul li::before { color: var(--new-holding-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-holding .node-icon { color: var(--new-holding-border); }
+
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa {
+        background-color: var(--new-celinho-sa-bg);
+        border: 2px solid var(--new-celinho-sa-border);
+      }
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa h4 { color: var(--new-celinho-sa-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa p,
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa ul li { color: var(--new-celinho-sa-body-text); }
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa ul li::before { color: var(--new-celinho-sa-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa .node-icon { color: var(--new-celinho-sa-border); }
+
+
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa {
+        background-color: var(--new-celio-damasceno-sa-bg);
+        border: 2px solid var(--new-celio-damasceno-sa-border);
+      }
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa h4 { color: var(--new-celio-damasceno-sa-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa p,
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa ul li { color: var(--new-celio-damasceno-sa-body-text); }
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa ul li::before { color: var(--new-celio-damasceno-sa-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa .node-icon { color: var(--new-celio-damasceno-sa-border); }
+
+      #kamby-grupo-organogram-slide .node.pillar-simples-op {
+        background-color: var(--new-simples-op-bg);
+        border: 2px solid var(--new-simples-op-border);
+      }
+      #kamby-grupo-organogram-slide .node.pillar-simples-op h4 { color: var(--new-simples-op-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-simples-op p,
+      #kamby-grupo-organogram-slide .node.pillar-simples-op ul li { color: var(--new-simples-op-body-text); }
+      #kamby-grupo-organogram-slide .node.pillar-simples-op ul li::before { color: var(--new-simples-op-title-text); }
+      #kamby-grupo-organogram-slide .node.pillar-simples-op .node-icon { color: var(--new-simples-op-border); }
+
+      #kamby-grupo-organogram-slide .node .node-icon {
+        font-size: 2.8em;
+        margin-bottom: 15px;
+        text-align: center;
+        opacity: 0.75;
+        line-height: 1;
+      }
+
+      #kamby-grupo-organogram-slide .node h4 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-family: var(--font-primary);
+        font-weight: 700;
+        font-size: 1.15em;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        padding-bottom: 10px;
+        text-align: center;
+      }
+      #kamby-grupo-organogram-slide .node.pillar-holding h4,
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa h4,
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa h4,
+      #kamby-grupo-organogram-slide .node.pillar-simples-op h4 {
+        border-bottom-color: rgba(0, 0, 0, 0.15);
+      }
+
+      #kamby-grupo-organogram-slide .node p {
+        margin-bottom: 8px;
+        font-size: 0.88em;
+        line-height: 1.55;
+      }
+      #kamby-grupo-organogram-slide .node ul {
+        list-style: none;
+        padding-left: 0;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        text-align: left;
+        font-size: 0.85em;
+      }
+      #kamby-grupo-organogram-slide .node ul li {
+        margin-bottom: 6px;
+        padding-left: 18px;
+        position: relative;
+      }
+      #kamby-grupo-organogram-slide .node ul li::before {
+        content: "✓";
+        position: absolute;
+        left: 0;
+        font-weight: bold;
+        font-size: 0.9em;
+        line-height: inherit;
+      }
+      #kamby-grupo-organogram-slide .node ul li strong { font-weight: 600; }
+
+      #kamby-grupo-organogram-slide .node.pillar-holding ul li strong,
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa ul li strong,
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa ul li strong,
+      #kamby-grupo-organogram-slide .node.pillar-simples-op ul li strong {
+        color: inherit;
+        opacity: 0.85;
+      }
+
+      #kamby-grupo-organogram-slide .structure-group {
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch; /* Makes columns of same height if wrapped */
+        flex-wrap: wrap;
+        margin-top: 20px;
+        gap: 20px;
+      }
+      #kamby-grupo-organogram-slide .column {
+        display: flex; 
+        flex-direction: column;
+        align-items: center; 
+        flex: 1; 
+        min-width: 250px; 
+        max-width: 300px; 
+      }
+      #kamby-grupo-organogram-slide .node p.info-text {
+        font-size: 0.8em;
+        font-style: italic;
+        margin-top: auto; 
+        padding-top: 12px;
+        opacity: 0.85;
+        text-align: center;
+        border-top: 1px dashed rgba(0,0,0,0.1);
+      }
+      #kamby-grupo-organogram-slide .node.pillar-holding p.info-text { color: var(--new-holding-body-text); border-top-color: var(--new-holding-border); }
+      #kamby-grupo-organogram-slide .node.pillar-celinho-sa p.info-text { color: var(--new-celinho-sa-body-text); border-top-color: var(--new-celinho-sa-border); }
+      #kamby-grupo-organogram-slide .node.pillar-celio-damasceno-sa p.info-text { color: var(--new-celio-damasceno-sa-body-text); border-top-color: var(--new-celio-damasceno-sa-border); }
+      #kamby-grupo-organogram-slide .node.pillar-simples-op p.info-text { color: var(--new-simples-op-body-text); border-top-color: var(--new-simples-op-border); }
+
+      #kamby-grupo-organogram-slide .node p.cnpj-text {
+        font-size: 0.75em;
+        margin-top: 3px;
+        margin-bottom: 8px;
+        text-align: center;
+        opacity: 0.7;
+      }
+
+      @media (max-width: 1200px) {
+        #kamby-grupo-organogram-slide .column { min-width: 220px; }
+        #kamby-grupo-organogram-slide .node { min-height: 340px; }
+      }
+       @media (max-width: 992px) { 
+        #kamby-grupo-organogram-slide .structure-group {
+          flex-direction: row; 
+          justify-content: center;
+        }
+        #kamby-grupo-organogram-slide .column {
+          min-width: calc(50% - 20px); 
+          max-width: 350px; 
+          margin-bottom: 20px;
+        }
+        #kamby-grupo-organogram-slide .section-title { font-size: 2.4rem; }
+        #kamby-grupo-organogram-slide .node { min-height: auto; } 
+      }
+      @media (max-width: 768px) { 
+        #kamby-grupo-organogram-slide .structure-group {
+          flex-direction: column;
+          align-items: center;
+        }
+        #kamby-grupo-organogram-slide .column {
+          min-width: 80%;
+          max-width: 400px; 
+          margin-bottom: 25px;
+        }
+        #kamby-grupo-organogram-slide .column:last-child { margin-bottom: 0; }
+        #kamby-grupo-organogram-slide .section-title { font-size: 2rem; }
+      }
+      /* --- END: Organogram GRUPO CELIO DAMASCENO CSS --- */
+
+
+      /* --- START: Gantt Chart CSS --- */
+      .gantt-section {
+        background-color: var(--bg-light-primary);
+        color: var(--text-dark-primary);
+        padding: 30px 20px; /* UPDATED PADDING */
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      #viabrasil-gantt .section-title {
+        font-family: var(--font-primary);
+        font-size: 2.2rem; /* UPDATED FONT SIZE */
+        font-weight: 700;
+        color: var(--text-dark-primary);
+        position: relative;
+        padding-bottom: 15px;
+        text-align: center;
+        width: fit-content;
+        max-width: 90%; /* UPDATED MAX-WIDTH */
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 35px;
+      }
+      #viabrasil-gantt .section-title::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        width: 70px;
+        height: 4px;
+        background-color: #00796b; /* UPDATED ACCENT COLOR */
+        border-radius: 2px;
+      }
+
+      .gantt-chart-wrapper {
+        width: 100%;
+        padding: 5px 0; /* Consistent with new Gantt */
+        overflow-x: auto;
+      }
+      .gantt-container-inner {
+        width: 100%;
+        min-width: 900px; /* ADDED MIN-WIDTH for new Gantt structure */
+        border: 1px solid var(--border-color-light);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow-light);
+        background-color: var(--bg-light-primary);
+        margin: 0 auto;
+      }
+
+      .gantt-header {
+        display: grid;
+        background-color: #eef2f5;
+        color: var(--text-dark-primary);
+        font-weight: 600;
+        border-bottom: 1px solid var(--border-color-light);
+        font-family: var(--font-primary);
+      }
+      #viabrasil-gantt .gantt-header {
+        grid-template-columns: 2.8fr repeat(7, 1fr); /* UPDATED GRID COLUMNS */
+      }
+      #viabrasil-gantt .gantt-header > div {
+        padding: 10px 8px;
+        text-align: center;
+        border-right: 1px solid var(--border-color-light);
+        font-size: 0.75em; /* UPDATED FONT SIZE */
+        white-space: normal; /* ADDED white-space */
+        line-height: 1.3; /* UPDATED line-height */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #viabrasil-gantt .gantt-header > div:last-child {
+        border-right: none;
+      }
+      #viabrasil-gantt .gantt-header .header-task {
+        text-align: left;
+        padding-left: 15px;
+        font-size: 0.82em; /* UPDATED FONT SIZE */
+      }
+
+      .gantt-row {
+        display: grid;
+        border-bottom: 1px solid var(--border-color-light);
+        background-color: var(--bg-light-primary);
+        transition: background-color 0.2s ease;
+      }
+      .gantt-row:last-child {
+        border-bottom: none;
+      }
+      .gantt-row:hover {
+        background-color: #f8f9fa;
+      }
+      #viabrasil-gantt .gantt-row {
+        grid-template-columns: 2.8fr repeat(7, 1fr); /* UPDATED GRID COLUMNS */
+      }
+      #viabrasil-gantt .gantt-task-name {
+        padding: 9px 15px;
+        font-size: 0.78em; /* UPDATED FONT SIZE */
+        color: var(--text-dark-secondary);
+        border-right: 1px solid var(--border-color-light);
+        display: flex;
+        align-items: center;
+        line-height: 1.4;
+      }
+      #viabrasil-gantt .gantt-phase-cell {
+        position: relative;
+        padding: 7px 5px;
+        border-right: 1px solid var(--border-color-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      #viabrasil-gantt .gantt-phase-cell:last-child {
+        border-right: none;
+      }
+      #viabrasil-gantt .gantt-bar-container {
+        width: 95%;
+        height: 18px;
+        background-color: transparent;
+        border-radius: 4px;
+        overflow: hidden;
+      }
+
+      .gantt-bar {
+        height: 100%;
+        border-radius: 4px;
+        opacity: 0;
+      }
+
+      /* NEW Gantt Bar Styles for Celio Damasceno */
+      #viabrasil-gantt .bar-cd-fase1 {
+        width: 100%;
+        opacity: 1;
+        background-color: var(--cd-gantt-fase1-color);
+      }
+      #viabrasil-gantt .bar-cd-fase2 {
+        width: 100%;
+        opacity: 1;
+        background-color: var(--cd-gantt-fase2-color);
+      }
+      #viabrasil-gantt .bar-cd-fase3 {
+        width: 100%;
+        opacity: 1;
+        background-color: var(--cd-gantt-fase3-color);
+      }
+      #viabrasil-gantt .bar-cd-fase4 {
+        width: 100%;
+        opacity: 1;
+        background-color: var(--cd-gantt-fase4-color);
+      }
+      #viabrasil-gantt .bar-cd-ongoing {
+        width: 100%;
+        opacity: 1;
+        background-color: var(--cd-gantt-ongoing-color);
+      }
+      /* --- END: Gantt Chart CSS --- */
+
+      .styled-table {
+        width: 100%;
+        margin: 20px auto;
+        border-collapse: collapse;
+        font-size: 0.9rem;
+        text-align: left;
+      }
+      .light-gray-section .styled-table,
+      .light-section .styled-table {
+        background-color: var(--bg-light-primary);
+        color: var(--text-dark-primary);
+        box-shadow: var(--card-shadow-light);
+        border-radius: 8px;
+        overflow: hidden;
+      }
+      .styled-table th,
+      .styled-table td {
+        padding: 12px 15px;
+        border: 1px solid var(--border-color-light);
+        vertical-align: top;
+      }
+      .light-gray-section .styled-table th,
+      .light-section .styled-table th {
+        background-color: var(--bg-light-secondary);
+        color: var(--primary-color);
+        font-family: var(--font-primary);
+        font-weight: 700;
+        font-size: 0.85em;
+        text-transform: uppercase;
+        border-bottom: 2px solid var(--secondary-color);
+        border-top: 1px solid var(--border-color-light);
+        border-left: 1px solid var(--border-color-light);
+        border-right: 1px solid var(--border-color-light);
+      }
+      .light-gray-section .styled-table td,
+      .light-section .styled-table td {
+        color: var(--text-dark-secondary);
+      }
+      .light-gray-section .styled-table tbody tr:nth-child(even),
+      .light-section .styled-table tbody tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+      .light-gray-section .styled-table tbody tr:hover,
+      .light-section .styled-table tbody tr:hover {
+        background-color: #e9ecef;
+      }
+      .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        margin-top: 20px;
+        border: 1px solid var(--border-color-light);
+        border-radius: 8px;
+        background-color: var(--bg-light-primary);
+      }
+      .styled-table tfoot tr {
+        font-weight: bold;
+        background-color: var(--bg-light-secondary);
+      }
+      .styled-table tfoot td {
+        color: var(--primary-color);
+      }
+      .styled-table tfoot td.economy-cell {
+        text-align: center;
+        font-size: 1.1em;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        color: var(--primary-color);
+        background-color: var(--bg-light-primary);
+        border-top: 2px solid var(--secondary-color);
+      }
+
+      .investment-table-wrapper {
+        width: 100%;
+        max-width: 600px;
+        margin: 30px auto;
+      }
+      .investment-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--accent-color-dark-theme);
+        color: var(--text-light-primary);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: var(--card-shadow-dark);
+        font-size: 1rem;
+      }
+      .investment-table th,
+      .investment-table td {
+        padding: 14px 20px;
+        border-bottom: 1px solid var(--border-color-dark);
+        text-align: left;
+      }
+      .investment-table th {
+        background-color: rgba(0, 0, 0, 0.25);
+        font-family: var(--font-primary);
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--secondary-color);
+        text-transform: uppercase;
+      }
+      .investment-table td:last-child {
+        text-align: right;
+        font-weight: bold;
+        color: var(--text-light-primary);
+      }
+      .investment-table tbody tr:last-child td {
+        border-bottom: none;
+      }
+      .investment-table tbody tr:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+      }
+      .investment-subtitle {
+        font-size: 1.2rem;
+        color: var(--text-light-secondary);
+        margin-bottom: 15px;
+      }
+      .payment-method-title {
+        font-size: 1.1rem;
+        color: var(--secondary-color);
+        margin-bottom: 20px;
+        font-weight: 600;
+      }
+
+      .investment-card-vista {
+        background-color: var(--accent-color-dark-theme);
+        color: var(--text-light-primary);
+        padding: 30px 40px;
+        border-radius: 12px;
+        box-shadow: var(--card-shadow-dark);
+        text-align: center;
+        border: 1px solid var(--border-color-dark);
+        border-top: 4px solid var(--secondary-color);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        max-width: 500px;
+        margin: 20px auto;
+      }
+      .investment-card-vista:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--card-shadow-hover-dark);
+      }
+      .investment-card-vista h5 {
+        font-family: var(--font-primary);
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: var(--text-light-primary);
+        margin-bottom: 10px;
+      }
+      .investment-card-vista .price {
+        font-family: var(--font-primary);
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: var(--secondary-color);
+        margin-top: 10px;
+        display: block;
+      }
+
+      .final-message-text {
+        font-family: var(--font-secondary);
+        font-size: 1.7rem;
+        line-height: 1.7;
+        font-weight: 400;
+        max-width: 800px;
+        color: var(--text-light-primary);
+        text-align: center;
+        margin: 0 auto;
+      }
+      .final-message-text strong {
+        color: var(--secondary-color);
+        font-weight: 700;
+      }
+
+      .navigation {
+        position: fixed;
+        right: 30px;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 1000;
+      }
+      .nav-dots {
+        list-style: none;
+        padding: 0;
+      }
+      .nav-dot {
+        margin: 8px 0;
+      }
+      .nav-link {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      .nav-link.on-light-bg-dot {
+        background-color: rgba(0, 0, 0, 0.25);
+        border: 1px solid rgba(0, 0, 0, 0.35);
+      }
+      .nav-link:hover,
+      .nav-link.active {
+        background-color: var(--secondary-color);
+        border-color: var(--secondary-color);
+        transform: scale(1.3);
+        box-shadow: 0 0 8px var(--secondary-color);
+      }
+      .nav-tooltip {
+        position: absolute;
+        right: 25px;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: var(--accent-color-dark-theme);
+        color: var(--text-light-primary);
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease, visibility 0.3s ease, right 0.3s ease;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+      }
+      .nav-link.on-light-bg-dot .nav-tooltip {
+        background-color: var(--bg-light-primary);
+        color: var(--text-dark-primary);
+        border: 1px solid var(--border-color-light);
+      }
+      .nav-link:hover .nav-tooltip {
+        opacity: 1;
+        visibility: visible;
+        right: 30px;
+      }
+
+      .scroll-indicator-capa {
+        position: absolute;
+        bottom: 30px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        z-index: 3;
+        opacity: 0;
+      }
+      .mouse-capa {
+        width: 24px;
+        height: 38px;
+        border: 2px solid var(--text-light-secondary);
+        border-radius: 12px;
+        position: relative;
+        margin-bottom: 8px;
+      }
+      .mouse-wheel-capa {
+        position: absolute;
+        top: 6px;
+        left: 50%;
+        width: 3px;
+        height: 6px;
+        margin-left: -1.5px;
+        background-color: var(--text-light-secondary);
+        border-radius: 2px;
+        animation: scrollAnimCapa 1.8s ease-in-out infinite;
+      }
+      .scroll-text-capa {
+        font-size: 0.75rem;
+        color: var(--text-light-secondary);
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+      }
+      @keyframes scrollAnimCapa {
+        0% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        60% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+        100% {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+      }
+      @keyframes fadeInCapaScrollIndicator {
+        from {
+          opacity: 0;
+          transform: translateX(-50%) translateY(10px);
+        }
+        to {
+          opacity: 0.8;
+          transform: translateX(-50%) translateY(0);
+        }
+      }
+
+      .logo-only-slide {
+        background-color: var(--bg-dark-primary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        border-bottom: none;
+      }
+      .logo-only-slide .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+      .logo-only-slide img {
+        max-width: 50vw;
+        max-height: 50vh;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+      }
+
+      @media (max-width: 992px) {
+        section {
+          padding: 70px 15px;
+        }
+        h2.section-title {
+          font-size: 2.3rem;
+          margin-bottom: 50px;
+        }
+        /* Ensure Gantt title also resizes if not overridden by its specific ID selector */
+        #viabrasil-gantt .section-title {
+            font-size: 1.8rem; /* Adjusted from new Gantt's 2.2rem for this breakpoint */
+        }
+        .capa-slide-title {
+          font-size: 2.2rem;
+        }
+        .list-section-content li {
+          font-size: 1rem;
+        }
+        .investment-table-wrapper {
+          max-width: 90%;
+        }
+        .investment-card-vista {
+          max-width: 90%;
+        }
+        .table-wrapper {
+          min-width: 700px;
+        }
+        .styled-table {
+          font-size: 0.85rem;
+        }
+        .styled-table th,
+        .styled-table td {
+          padding: 10px 12px;
+        }
+        .sectional-cover-title {
+          font-size: 2.8rem;
+        }
+      }
+      @media (max-width: 768px) {
+        section {
+          padding: 60px 10px;
+        }
+        h2.section-title {
+          font-size: 2rem;
+          margin-bottom: 40px;
+          padding-bottom: 15px;
+        }
+        #viabrasil-gantt .section-title {
+            font-size: 1.6rem; /* Adjusted for this breakpoint */
+        }
+        h2.section-title::after {
+          width: 70px;
+          height: 3px;
+        }
+        #viabrasil-gantt .section-title::after {
+          width: 70px; /* Keep consistent or adjust if needed */
+          height: 4px;
+        }
+
+        .capa-slide-title {
+          font-size: 1.9rem;
+        }
+        .navigation {
+          display: none;
+        }
+        .list-section-content h3 {
+          font-size: 1.3rem;
+        }
+        .list-section-content .intro-paragraph {
+          font-size: 1rem;
+        }
+        .investment-table th,
+        .investment-table td {
+          padding: 10px 15px;
+          font-size: 0.9rem;
+        }
+        .investment-card-vista h5 {
+          font-size: 1.2rem;
+        }
+        .investment-card-vista .price {
+          font-size: 2.2rem;
+        }
+        .styled-table {
+          font-size: 0.8rem;
+        }
+        .styled-table th,
+        .styled-table td {
+          padding: 8px 10px;
+        }
+        .final-message-text {
+          font-size: 1.4rem;
+        }
+        .sectional-cover-title {
+          font-size: 2.2rem;
+        }
+      }
+      @media (max-width: 480px) {
+        h2.section-title {
+          font-size: 1.8rem;
+          margin-bottom: 35px;
+        }
+        #viabrasil-gantt .section-title {
+            font-size: 1.5rem; /* Adjusted for this breakpoint */
+        }
+
+        #viabrasil-gantt .gantt-header > div,
+        #viabrasil-gantt .gantt-task-name {
+          font-size: 0.68em; /* Adjusted for smaller screens */
+        }
+        #viabrasil-gantt .gantt-header .header-task {
+          font-size: 0.7em; /* Adjusted */
+        }
+        #viabrasil-gantt .gantt-task-name {
+          padding: 8px 10px; /* Slightly more padding if possible */
+          line-height: 1.3;
+        }
+        #viabrasil-gantt .gantt-phase-cell {
+          padding: 8px 3px; /* Adjusted */
+        }
+        #viabrasil-gantt .gantt-bar-container {
+          height: 16px; /* Slightly smaller bar */
+        }
+
+        .capa-slide-title {
+          font-size: 1.7rem;
+          text-align: center;
+        }
+        .list-section-content li {
+          font-size: 0.9rem;
+          padding: 15px 20px;
+        }
+        .list-section-content h3 {
+          font-size: 1.2rem;
+        }
+        .investment-table th,
+        .investment-table td {
+          font-size: 0.85rem;
+        }
+        .investment-card-vista h5 {
+          font-size: 1.1rem;
+        }
+        .investment-card-vista .price {
+          font-size: 2rem;
+        }
+        .styled-table {
+          font-size: 0.75rem;
+        }
+        .styled-table th,
+        .styled-table td {
+          padding: 6px 8px;
+        }
+        .final-message-text {
+          font-size: 1.2rem;
+        }
+        .sectional-cover-title {
+          font-size: 1.8rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navigation">
+      <ul class="nav-dots">
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-0" class="nav-link active"
+            ><span class="nav-tooltip">Início W1</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-1" class="nav-link"
+            ><span class="nav-tooltip">Capa</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-2" class="nav-link"
+            ><span class="nav-tooltip">Apresentação</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-3" class="nav-link"
+            ><span class="nav-tooltip">Grupo Celio Damasceno</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-4" class="nav-link"
+            ><span class="nav-tooltip">Objetivo</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-5" class="nav-link"
+            ><span class="nav-tooltip">Riscos</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-6" class="nav-link"
+            ><span class="nav-tooltip">Riscos PF</span></a
+          >
+        </li>
+        <li class="nav-dot">
+            <a href="#kamby-final-slide-7" class="nav-link"
+              ><span class="nav-tooltip">Riscos Operacionais</span></a
+            >
+          </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-8" class="nav-link"
+            ><span class="nav-tooltip">Proposta W1</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-9" class="nav-link"
+            ><span class="nav-tooltip">Papel W1 Consultoria</span></a
+          >
+        </li>
+        <li class="nav-dot">
+            <a href="#kamby-grupo-organogram-slide" class="nav-link"
+              ><span class="nav-tooltip">Organograma Grupo</span></a
+            >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-13" class="nav-link"
+            ><span class="nav-tooltip">Benefícios</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14" class="nav-link"
+            ><span class="nav-tooltip">Benefícios S.A.</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14b" class="nav-link"
+            ><span class="nav-tooltip">Comparativo Custos</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14c" class="nav-link"
+            ><span class="nav-tooltip">Custos (5 Anos)</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14d" class="nav-link"
+            ><span class="nav-tooltip">Custos (10 Anos)</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14e" class="nav-link"
+            ><span class="nav-tooltip">Economia Venda</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14f" class="nav-link"
+            ><span class="nav-tooltip">Benefícios Simples Nacional</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14g" class="nav-link"
+            ><span class="nav-tooltip">Vantagens Nova Empresa</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-14h" class="nav-link"
+            ><span class="nav-tooltip">Benefícios Transformação S.A.</span></a
+          >
+        </li>
+        <li class="nav-dot">
+            <a href="#kamby-final-slide-14i" class="nav-link"
+              ><span class="nav-tooltip">Vantagens S.A. Capital Fechado</span></a
+            >
+          </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-15" class="nav-link"
+            ><span class="nav-tooltip">Execução</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#viabrasil-gantt" class="nav-link"
+            ><span class="nav-tooltip">Cronograma VIA BRASIL</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-23" class="nav-link"
+            ><span class="nav-tooltip">Entregas</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-24" class="nav-link"
+            ><span class="nav-tooltip">Entregáveis</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-25" class="nav-link"
+            ><span class="nav-tooltip">Custo</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-26" class="nav-link"
+            ><span class="nav-tooltip">Investimento</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-27" class="nav-link"
+            ><span class="nav-tooltip">Invest. à Vista</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-28" class="nav-link"
+            ><span class="nav-tooltip">Ação</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-29" class="nav-link"
+            ><span class="nav-tooltip">Próximos Passos</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-29b" class="nav-link"
+            ><span class="nav-tooltip">Passos Imediatos</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-29c" class="nav-link"
+            ><span class="nav-tooltip">Início Trabalhos</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-30" class="nav-link"
+            ><span class="nav-tooltip">Fim</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-31" class="nav-link"
+            ><span class="nav-tooltip">Obrigado</span></a
+          >
+        </li>
+        <li class="nav-dot">
+          <a href="#kamby-final-slide-32" class="nav-link"
+            ><span class="nav-tooltip">Fim W1</span></a
+          >
+        </li>
+      </ul>
+    </nav>
+
+    <section id="kamby-final-slide-0" class="logo-only-slide">
+      <div class="container">
+        <img src="https://i.postimg.cc/MKD8hCs3/logo-w1.png" alt="W1 Logo" />
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-1" class="capa-section">
+      <div class="capa-content">
+        <div class="logo-container-capa">
+          <div class="logo-shape-capa">
+            <div class="logo-text-capa">W<span>1</span></div>
+          </div>
+        </div>
+        <h1 class="capa-slide-title">
+          PLANEJAMENTO ESTRATÉGICO <br />
+          <span class="highlight">Grupo C&C</span>
+        </h1>
+        <p class="capa-details">Maio de 2025</p>
+      </div>
+      <div class="scroll-indicator-capa">
+        <div class="mouse-capa"><div class="mouse-wheel-capa"></div></div>
+        <span class="scroll-text-capa">Explore</span>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-2" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">APRESENTAÇÃO E OBJETIVOS</h1>
+      </div>
+    </section>
+
+<section
+      id="kamby-final-slide-3"
+      class="list-section-content light-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+            Tradição, Solidez e Visão de Futuro
+        </h2>
+        <div class="institutional-content-wrapper">
+          <div class="institutional-text-content">
+            <p class="intro-paragraph">
+                Fundado pela família Damasceno, o Grupo consolidou mais de três décadas de atuação no mercado de transporte, locação de equipamentos e distribuição de água em Itabirito-MG. A trajetória iniciada em 1992 com a Celio Damasceno Locações e expandida em 2008 com a Celinho Transportes demonstra crescimento sólido que agora demanda uma nova estrutura organizacional para otimizar eficiência tributária e governança corporativa.
+            </p>
+            <p class="intro-paragraph">
+                O Grupo está implementando uma reestruturação estratégica através da criação de uma holding patrimonial que integralizará os imóveis da família, uma empresa operacional no Simples Nacional para absorver a folha salarial com menor oneração, e a transformação das atuais empresas em sociedades anônimas de capital fechado. A Celinho Transportes S.A isolará os veículos, enquanto a Celio Damasceno Locações e Serviços S.A operará no Lucro Real, absorvendo despesas e locações com tributação otimizada.
+            </p>
+            <p class="intro-paragraph">
+                Esta moderna estrutura de governança corporativa entre os sócios representa não apenas a profissionalização do negócio familiar, mas também a preparação para um crescimento sustentável e eficiente. A reorganização societária posicionará o Grupo para enfrentar os desafios futuros com maior segurança jurídica, otimização fiscal e transparência operacional para as próximas gerações.
+            </p>
+          </div>
+          <div class="institutional-logo-column">
+            <img
+              src="https://i.postimg.cc/7LDn0fW5/C-C-locac-o-es.png" 
+              alt="Logo Grupo"
+              class="kamby-rectangular-logo"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section id="kamby-final-slide-4" class="list-section-content">
+      <div class="container">
+        <h2 class="section-title">Objetivo do Projeto</h2>
+        <ul style="max-width: 800px; width: 100%; margin: 0 auto;">
+            <li>
+                <span><strong>Proteção Patrimonial:</strong> Segregar o patrimônio imobiliário familiar dos riscos operacionais das empresas.</span>
+            </li>
+            <li>
+                <span><strong>Eficiência Tributária:</strong> Readequar as estruturas empresariais para regimes tributários mais vantajosos, especialmente no que tange à folha de salários e à alocação de despesas.</span>
+            </li>
+            <li>
+                <span><strong>Governança Corporativa e Sucessão:</strong> Implementar uma estrutura de Sociedade Anônima de capital fechado para as empresas operacionais, facilitando a governança, a profissionalização da gestão e o planejamento sucessório.</span>
+            </li>
+            <li>
+                <span><strong>Otimização Operacional:</strong> Isolar frotas de veículos e centralizar despesas de forma estratégica para melhor controle e dedutibilidade fiscal.</span>
+            </li>
+            <li>
+                <span><strong>Criação de Mecanismos de Perenidade:</strong> Estabelecer bases sólidas para a continuidade dos negócios e a preservação do legado familiar.</span>
+            </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-5" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">DIAGNÓSTICO DE RISCOS</h1>
+      </div>
+    </section>
+
+<section
+      id="kamby-final-slide-6"
+      class="list-section-content light-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+            Patrimônio Imobiliário
+        </h2>
+        <ul style="max-width: 900px; margin-top: 20px;">
+          <li>
+            <span><strong>Confusão Patrimonial e Penhora:</strong> Dívidas pessoais ou empresariais dos sócios podem atingir diretamente os imóveis em seus nomes, colocando em risco o patrimônio familiar.</span>
+          </li>
+          <li>
+            <span><strong>Sucessão Complexa e Cara:</strong> O falecimento de um sócio exige inventário lento e caro, com ITCMD, custos judiciais e risco de conflitos.</span>
+          </li>
+          <li>
+            <span><strong>Tributação Alta sobre Aluguéis (PF):</strong> Aluguéis em nome da PF são taxados até 27,5% no IR.</span>
+          </li>
+          <li>
+            <span><strong>Gestão Descentralizada:</strong> Imóveis espalhados entre sócios dificultam o controle e reduzem eficiência.</span>
+          </li>
+          <li>
+            <span><strong>Indisponibilidade em Vida:</strong> Problemas de saúde ou incapacidade comprometem a administração dos bens.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-7" class="list-section-content light-gray-section">
+        <div class="container">
+            <h2 class="section-title on-light-bg">Operações e Folha de Pagamento</h2>
+            <ul style="max-width: 900px; margin-top: 20px;">
+                <li>
+                    <span><strong>Carga Tributária Alta sobre a Folha:</strong> Empresas no Lucro Presumido ou Real enfrentam encargos elevados com INSS, FGTS e Sistema S, onerando a mão de obra.</span>
+                </li>
+                <li>
+                    <span><strong>Baixa Competitividade em Serviços com Alta Mão de Obra:</strong> Custos trabalhistas mais altos reduzem a margem e dificultam competir em setores que dependem de pessoas.</span>
+                </li>
+                <li>
+                    <span><strong>Gestão de Pessoal Dispersa e Ineficiente:</strong> Folha misturada nas empresas principais desvia o foco da operação principal.</span>
+                </li>
+                <li>
+                    <span><strong>Risco Trabalhista Direto nas Empresas-Chave:</strong> Ações trabalhistas recaem sobre as empresas que concentram ativos e receita.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="kamby-final-slide-8" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">PROPOSTA ESTRATÉGICA W1</h1>
+      </div>
+    </section>
+
+    <section
+      id="kamby-final-slide-9"
+      class="list-section-content light-gray-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">O Papel da W1 Consultoria</h2>
+        <p class="intro-paragraph">
+          A W1 Consultoria Patrimonial será sua parceira estratégica nesta
+          jornada de transformação. Nossa abordagem é eminentemente societária,
+          com foco primordial na proteção patrimonial e na perenidade do
+          negócio.
+        </p>
+        <ul>
+          <li>
+            <span
+              ><strong>Expertise Especializada:</strong> Oferecemos conhecimento
+              aprofundado em direito societário, governança corporativa e
+              planejamento sucessório, garantindo que todas as etapas sejam
+              executadas com excelência.</span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Coordenação Integral:</strong> Atuaremos na coordenação
+              de todo o processo, desde a concepção da estrutura até a sua
+              formalização, interface com órgãos reguladores (JUCEMG, Receita
+              Federal) e demais profissionais envolvidos.</span
+            >
+          </li>
+          <li>
+            <span
+              ><strong>Proteção Patrimonial Integrada:</strong> Nossa premissa é
+              construir uma estrutura que não só otimize o negócio, mas que
+              também resguarde o patrimônio pessoal dos sócios e da
+              família.</span
+            >
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="kamby-grupo-organogram-slide" class="organogram-section light-gray-section">
+        <div class="container">
+          <h2 class="section-title on-light-bg">Visão Geral Estratégica</h2>
+          <div class="organogram-container">
+            <div class="structure-group">
+              <div class="column">
+                <div class="node pillar-holding" id="pilar-holding">
+                  <div class="node-icon">🏛️</div>
+                  <h4>Holding Patrimonial Celio Damasceno</h4>
+                  <p>(S.A. ou Ltda)</p>
+                  <ul>
+                    <li><strong>Foco:</strong> Proteção e gestão de imóveis.</li>
+                    <li><strong>Objetivo:</strong> Segregação patrimonial.</li>
+                    <li><strong>Benefício:</strong> Planejamento sucessório.</li>
+                    <li><strong>Ativos:</strong> Imóveis da família.</li>
+                  </ul>
+                  <p class="info-text">
+                    Base para segurança e perenidade do legado familiar.
+                  </p>
+                </div>
+              </div>
+  
+              <div class="column">
+                <div class="node pillar-celinho-sa" id="pilar-celinho-sa">
+                  <div class="node-icon">⛟</div>
+                  <h4>Celinho Transportes S.A.</h4>
+                  <p>(Transformação para S.A. - Capital Fechado)</p>
+                  <p class="cnpj-text">CNPJ: 10.335.581/0001-76</p>
+                  <ul>
+                    <li><strong>Foco:</strong> Isolamento e gestão da frota.</li>
+                    <li><strong>Ativos:</strong> Veículos (caminhões, etc.).</li>
+                    <li>
+                      <strong>Interação:</strong> Locação para Celio Damasceno
+                      S.A.
+                    </li>
+                    <li>
+                      <strong>Benefício:</strong> Clareza na gestão de custos.
+                    </li>
+                  </ul>
+                  <p class="info-text">
+                    Especialização na gestão de ativos de transporte.
+                  </p>
+                </div>
+              </div>
+  
+              <div class="column">
+                <div
+                  class="node pillar-celio-damasceno-sa"
+                  id="pilar-celio-damasceno-sa"
+                >
+                  <div class="node-icon">⚙️</div>
+                  <h4>Celio Damasceno Locações e Serviços S.A.</h4>
+                  <p>(Transformação para S.A. - Capital Fechado)</p>
+                  <p
+                    style="
+                      font-weight: bold;
+                      text-align: center;
+                      color: var(--new-celio-damasceno-sa-title-text);
+                      margin-bottom: 5px;
+                    "
+                  >
+                    Regime: Lucro Real
+                  </p>
+                  <p class="cnpj-text">CNPJ: 42.926.626/0001-73</p>
+                  <ul>
+                    <li>
+                      <strong>Foco:</strong> Operacional central e finanças.
+                    </li>
+                    <li><strong>Receitas:</strong> Serviços ao mercado.</li>
+                    <li>
+                      <strong>Despesas:</strong> Contrata Nova Operacional e
+                      Celinho S.A.
+                    </li>
+                    <li><strong>Benefício:</strong> Otimização tributária.</li>
+                  </ul>
+                  <p class="info-text">
+                    Núcleo operacional e financeiro do grupo.
+                  </p>
+                </div>
+              </div>
+  
+              <div class="column">
+                <div class="node pillar-simples-op" id="pilar-simples-op">
+                  <div class="node-icon">👤</div>
+                  <h4>Nova Empresa Operacional Ltda</h4>
+                  <p>(Optante pelo Simples Nacional)</p>
+                  <p class="cnpj-text">(Nome e CNPJ a definir)</p>
+                  <ul>
+                    <li><strong>Foco:</strong> Gestão de folha de pagamento.</li>
+                    <li><strong>Objetivo:</strong> Redução de encargos.</li>
+                    <li>
+                      <strong>Interação:</strong> Presta serviços à Celio
+                      Damasceno S.A.
+                    </li>
+                    <li>
+                      <strong>Benefício:</strong> Custo de pessoal otimizado.
+                    </li>
+                  </ul>
+                  <p class="info-text">Eficiência e economia na gestão de RH.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    <section id="kamby-final-slide-13" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">BENEFÍCIOS DA HOLDING PATRIMONIAL</h1>
+      </div>
+    </section>
+
+<section
+      id="kamby-final-slide-14"
+      class="list-section-content light-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+          Benefícios da Holding Patrimonial
+        </h2>
+        <p class="intro-paragraph centered">
+          Blindagem Patrimonial: Imóveis dentro da Holding ficam protegidos contra dívidas das empresas operacionais ou de sócios, desde que a integralização seja realizada sem fraude.
+        </p>
+
+        <ul>
+          <li><span>Planejamento Sucessório Facilitado: Evita o inventário judicial e permite transferência antecipada de quotas/ações aos herdeiros, com reserva de usufruto para os fundadores.</span></li>
+        </ul>
+
+        <ul>
+          <li><span>Redução Potencial do ITCMD: Estruturação adequada pode reduzir impostos sobre transmissão patrimonial, dependendo da legislação estadual aplicável.</span></li>
+        </ul>
+
+        <ul>
+          <li><span>Otimização Tributária em Aluguéis: Rendimentos imobiliários recebidos por Pessoa Jurídica (Holding) geralmente sofrem tributação mais favorável do que quando recebidos por Pessoa Física.</span></li>
+        </ul>
+
+        <ul>
+          <li><span>Preservação da Harmonia Familiar: Regras claras de gestão e sucessão ajudam a evitar conflitos entre familiares, garantindo governança estruturada e previsível.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section
+      id="kamby-final-slide-14b"
+      class="list-section-content light-gray-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+          Comparativo de Custos Sucessórios Estimados
+        </h2>
+        <div
+          class="table-wrapper"
+          style="max-width: 950px; margin-left: auto; margin-right: auto"
+        >
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Sistema / Característica</th>
+                <th>Cenário Atual</th>
+                <th>Sucessão Prevista</th>
+                <th>Fase Projeto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Valor dos Bens Base para Cálculo</td>
+                <td>R$ 5.850.000,00</td>
+                <td>R$ 1.056.424,71</td>
+                <td><em>N/A</em></td>
+              </tr>
+              <tr>
+                <td>ITBI (Estimado)</td>
+                <td>R$ 0,00</td>
+                <td>R$ 143.807,26</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Custos de Transformação Societária em S.A.</td>
+                <td>R$ 0,00</td>
+                <td>R$ 0,00</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>ITCMD (Imposto sobre Herança / Doação - Estimado)</td>
+                <td>R$ 292.500,00</td>
+                <td>R$ 52.821,24</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>
+                  Honorários Advocatícios (Inventário)
+                </td>
+                <td>R$ 292.500,00</td>
+                <td>R$ 30.000,00</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total Estimado dos Custos Sucessórios</td>
+                <td>R$ 585.000,00</td>
+                <td>R$ 227.828,49</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="4" class="economy-cell">
+                  Economia Estimada com a Estrutura Holding: R$ 357.171,51
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="kamby-final-slide-14c"
+      class="list-section-content light-gray-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+          Sucessão em 5 Anos
+        </h2>
+        <div
+          class="table-wrapper"
+          style="max-width: 950px; margin-left: auto; margin-right: auto"
+        >
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Sistema / Característica</th>
+                <th>Cenário Atual</th>
+                <th>Sucessão Prevista</th>
+                <th>Fase Projeto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Valor dos Bens Base para Cálculo (Projetado)</td>
+                <td>R$ 7.777.057,58</td>
+                <td>R$ 861.379,87</td>
+                <td><em>N/A</em></td>
+              </tr>
+              <tr>
+                <td>ITBI (Estimado s/ Integralização/Doação de Cotas/Ações)</td>
+                <td>R$ 0,00</td>
+                <td>R$ 0,00</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Custos de Transformação Societária em S.A.</td>
+                <td>R$ 0,00</td>
+                <td>R$ 0,00</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>ITCMD (Imposto sobre Herança / Doação - Estimado)</td>
+                <td>R$ 388.852,88</td>
+                <td>R$ 43.068,99</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>
+                  Honorários Advocatícios (Estimativa Inventário / Holding)
+                </td>
+                <td>R$ 388.852,88</td>
+                <td>R$ 30.000,00</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total Estimado dos Custos Sucessórios</td>
+                <td>R$ 777.705,76</td>
+                <td>R$ 73.068,99</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="4" class="economy-cell">
+                  Economia Estimada com a Estrutura Holding (em 5 anos): R$ 704.636,76	
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section
+      id="kamby-final-slide-14d"
+      class="list-section-content light-gray-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+          Sucessão em 10 Anos
+        </h2>
+        <div
+          class="table-wrapper"
+          style="max-width: 950px; margin-left: auto; margin-right: auto"
+        >
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Sistema / Característica</th>
+                <th>Cenário Atual</th>
+                <th>Sucessão Prevista</th>
+                <th>Fase Projeto</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Valor dos Bens Base para Cálculo (Projetado)</td>
+                <td>R$ 10.545.849,15</td>
+                <td>R$ 702.345,62</td>
+                <td><em>N/A</em></td>
+              </tr>
+              <tr>
+                <td>ITBI (Estimado s/ Integralização/Doação de Cotas/Ações)</td>
+                <td>R$ 0,00</td>
+                <td>R$ 0,00</td>
+                <td>2</td>
+              </tr>
+              <tr>
+                <td>Custos de Transformação Societária em S.A.</td>
+                <td>R$ 0,00</td>
+                <td>R$ 0,00</td>
+                <td>1</td>
+              </tr>
+              <tr>
+                <td>ITCMD (Imposto sobre Herança / Doação - Estimado)</td>
+                <td>R$ 527.292,46</td>
+                <td>R$ 35.117,28</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>
+                  Honorários Advocatícios (Estimativa Inventário / Holding)
+                </td>
+                <td>R$ 527.292,46</td>
+                <td>R$ 30.000,00</td>
+                <td>3</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td>Total Estimado dos Custos Sucessórios</td>
+                <td>R$ 1.054.584,91</td>
+                <td>R$ 65.117,28</td>
+                <td></td>
+              </tr>
+              <tr>
+                <td colspan="4" class="economy-cell">
+                  Economia Estimada com a Estrutura Holding (em 10 anos): R$ 989.467,63	
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+    </section>
+    <section
+      id="kamby-final-slide-14e"
+      class="list-section-content light-gray-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+          Economia Tributária na Venda de Patrimônio (Imóveis)
+        </h2>
+        <div
+          class="table-wrapper"
+          style="max-width: 850px; margin-left: auto; margin-right: auto"
+        >
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>Critério</th>
+                <th>Pessoa Física</th>
+                <th>Holding</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="font-weight: bold">
+                <td>IMPOSTO ESTIMADO NA VENDA</td>
+                <td>R$ 719.036,29</td>
+                <td>R$ 394.290,00</td>
+              </tr>
+              <tr>
+                <td>Base de Cálculo do Imposto</td>
+                <td>
+                  Ganho de Capital (Diferença entre valor de venda e custo de
+                  aquisição declarado)
+                </td>
+                <td>
+                  Receita Bruta (Valor total da venda do imóvel, se
+                  caracterizado como atividade imobiliária/estoque)
+                </td>
+              </tr>
+              <tr>
+                <td>Alíquota Aplicável (Referência)</td>
+                <td>15% a 22,5% (sobre o Ganho de Capital)</td>
+                <td>
+                  Aproximadamente 5,93% a 6,73% (PIS, COFINS, IRPJ, CSLL sobre a
+                  Receita Bruta)
+                </td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" class="economy-cell" style="text-align: center">
+                  Economia Estimada com a Holding na Venda (Já Descontado ITBI): R$ 180.939,03
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-14f" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">BENEFÍCIOS - SIMPLES NACIONAL</h1>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-14g" class="list-section-content light-gray-section">
+        <div class="container">
+            <h2 class="section-title on-light-bg">Vantagens da Nova Empresa Operacional no Simples Nacional</h2>
+            <p class="intro-paragraph centered" style="max-width: 900px;">
+                A criação de uma nova empresa, optante pelo Simples Nacional, dedicada a absorver a folha de salários e certas operações de serviço, trará significativas vantagens econômicas e gerenciais.
+            </p>
+            <ul style="max-width: 900px;">
+                <li>
+                    <span><strong>Redução Expressiva da Carga Tributária sobre a Folha de Pagamento:</strong> No Simples Nacional, a empresa pode pagar alíquota única que inclui ou reduz significativamente o INSS patronal (20%) e contribuições do Sistema S, com grande economia fiscal.</span>
+                </li>
+                <li>
+                    <span><strong>Simplificação das Obrigações Acessórias:</strong> Regime do Simples reduz burocracia, custos contábeis e carga com obrigações fiscais e trabalhistas, graças ao DAS e à unificação de tributos.</span>
+                </li>
+                <li>
+                    <span><strong>Foco Estratégico nas Atividades Fim:</strong> A separação da gestão de pessoal em uma empresa dedicada permite que as futuras S.A.s concentrem esforços na operação principal, com maior eficiência.</span>
+                </li>
+                <li>
+                    <span><strong>Maior Competitividade:</strong> Com menor custo de mão de obra, o grupo consegue precificação mais competitiva e margem de lucro mais atrativa no mercado.</span>
+                </li>
+                <li>
+                    <span><strong>Segregação de Riscos Trabalhistas:</strong> Ao centralizar a folha de pagamento em uma empresa específica, os passivos trabalhistas ficam mais isolados, protegendo o patrimônio das demais empresas do grupo.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="kamby-final-slide-14h" class="sectional-cover-slide">
+        <div class="container">
+          <div class="kamby-logo-container">
+            <img
+              src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+              alt="Logo Kamby"
+              class="kamby-logo-image"
+            />
+            <p class="kamby-company-name">
+              Grupo C&C Locações
+            </p>
+          </div>
+          <h1 class="sectional-cover-title">BENEFÍCIOS DA S.A</h1>
+        </div>
+      </section>
+
+    <section id="kamby-final-slide-14i" class="list-section-content light-gray-section">
+        <div class="container">
+            <h2 class="section-title on-light-bg">Vantagens da Transformação em (S.A.)</h2>
+            <p class="intro-paragraph centered" style="max-width: 900px;">
+                A conversão da "Celinho Transportes Ltda" e "Celio Damasceno Locações e Serviços Ltda" (anteriormente EIRELI) em Sociedades Anônimas de capital fechado elevará o nível de governança e preparará o grupo para o futuro.
+            </p>
+            <ul style="max-width: 900px;">
+                <li>
+                    <span><strong>Governança Corporativa Robusta:</strong> A S.A. permite estruturar Conselho de Administração, Diretoria com mandatos definidos e Conselho Fiscal, aumentando transparência e clareza na gestão.</span>
+                </li>
+                <li>
+                    <span><strong>Planejamento Sucessório Simplificado:</strong> Ações são mais fáceis de transferir do que quotas, facilitando o direcionamento patrimonial entre gerações e a manutenção do controle familiar.</span>
+                </li>
+                <li>
+                    <span><strong>Proteção Jurídica aos Administradores:</strong> Decisões registradas e governança bem estruturada oferecem maior segurança legal aos gestores, protegendo-os de responsabilidades indevidas.</span>
+                </li>
+                <li>
+                    <span><strong>Fortalecimento da Imagem Corporativa:</strong> A S.A. transmite ao mercado uma imagem de solidez, organização e potencial de expansão, importante para parcerias e negociações.</span>
+                </li>
+                <li>
+                    <span><strong>Isolamento de Riscos (Celinho Transportes S.A.):</strong> A frota fica concentrada em uma única empresa, separando os riscos operacionais (seguros, acidentes, manutenção) das demais atividades do grupo.</span>
+                </li>
+                <li>
+                    <span><strong>Controle Estratégico de Custos e Rentabilidade (Celinho Transportes S.A.):</strong> Facilita a alocação de custos e análise de rentabilidade da frota, além de permitir faturamento próprio por locações internas.</span>
+                </li>
+                <li>
+                    <span><strong>Otimização Fiscal (Celio Damasceno Locações e Serviços S.A.):</strong> No Lucro Real, permite deduzir diversas despesas operacionais, como locação de veículos e folha de pagamento terceirizada, reduzindo tributos.</span>
+                </li>
+                <li>
+                    <span><strong>Centralização de Despesas Operacionais:</strong> Consolida custos do grupo, melhorando aproveitamento fiscal de créditos de PIS/COFINS e deduções de IRPJ e CSLL.</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="kamby-final-slide-15" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">PLANO DE EXECUÇÃO</h1>
+      </div>
+    </section>
+
+    <section id="viabrasil-gantt" class="gantt-section"> <div class="container">
+        <h2 class="section-title"> Cronograma Estimado do Projeto
+        </h2>
+        <div class="gantt-chart-wrapper">
+          <div class="gantt-container-inner">
+            <div class="gantt-header">
+              <div class="header-task">Atividade Principal / Etapa</div>
+              <div>Fase 1</div>
+              <div>Fase 2</div>
+              <div>Fase 3</div>
+              <div>Fase 4</div>
+              <div>Ano 1</div>
+              <div>Ano 2</div>
+              <div>Ano 3</div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                1. Diagnóstico Completo e Plano de Reestruturação
+              </div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase1"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                2. Constituição: Holding Patrimonial e Nova Operacional (Simples
+                Nacional)
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase2"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                3. Transformação das Empresas Existentes em S.A. (Celinho e
+                Celio Damasceno)
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase2"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                4. Elaboração de Atos Societários, Contratos Intercompany e
+                Acordos de Acionistas
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase2"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                5. Transferência de Ativos (Imóveis, Veículos) e Alocação de
+                Pessoal
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase3"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                6. Implementação da Governança Corporativa (Estrutura Inicial e
+                Acordos)
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase4"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                7. Entrega Final: Documentação Consolidada e Manuais do Projeto
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-fase4"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+            </div>
+
+            <div class="gantt-row">
+              <div class="gantt-task-name">
+                8. Monitoramento, Ajustes e Suporte Estratégico Contínuo
+              </div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell"></div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-ongoing"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-ongoing"></div>
+                </div>
+              </div>
+              <div class="gantt-phase-cell">
+                <div class="gantt-bar-container">
+                  <div class="gantt-bar bar-cd-ongoing"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-23" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">ENTREGÁVEIS</h1>
+      </div>
+    </section>
+
+<section
+      id="kamby-final-slide-24"
+      class="list-section-content light-gray-section"
+    >
+      <div class="container">
+        <h2 class="section-title on-light-bg">
+          Principais Entregáveis do Projeto
+        </h2>
+        <p class="intro-paragraph centered">
+          Ao final deste projeto de consultoria, o Grupo Celio Damasceno receberá:
+        </p>
+        <ul>
+          <li>
+            <span><strong>Diagnóstico Completo:</strong> Relatório detalhado da estrutura atual, com análise de riscos e oportunidades para melhoria jurídica e tributária.</span>
+          </li>
+          <li>
+            <span><strong>Plano de Reestruturação Societária e Patrimonial:</strong> Estratégia clara com o desenho das novas empresas, fluxos operacionais e justificativas técnicas para cada decisão.</span>
+          </li>
+          <li>
+            <span><strong>Minutas dos Atos Societários Necessários:</strong> Documentos prontos para uso, incluindo estatutos, contratos sociais, atas e acordos societários/acionários.</span>
+          </li>
+          <li>
+            <span><strong>Orientação para Transferência de Ativos e Funcionários:</strong> Diretrizes claras para integralização de imóveis, transferência de veículos e migração de pessoal sem risco jurídico.</span>
+          </li>
+          <li>
+            <span><strong>Relatório Final do Projeto:</strong> Consolidação de todas as entregas, com visão geral da nova estrutura e recomendações futuras.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-25" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">INVESTIMENTO</h1>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-26">
+      <div class="container">
+        <h2 class="section-title">Investimento Parcelado</h2>
+        <p class="investment-subtitle">
+          Personalizado para a Família e Damasceno
+        </p>
+        <p class="payment-method-title">
+          Opções de Pagamento via Cartão de Crédito
+        </p>
+        <div class="investment-table-wrapper">
+          <table class="investment-table">
+            <thead>
+              <tr>
+                <th>Parcelamento</th>
+                <th>Valor da Parcela</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>9x</td>
+                <td>R$ 12.127,78 </td>
+              </tr>
+              <tr>
+                <td>6x</td>
+                <td>R$ 17.758,33 </td>
+              </tr>
+              <tr>
+                <td>3x</td>
+                <td>R$ 34.840,00 </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-27">
+      <div class="container">
+        <h2 class="section-title">Investimento à Vista</h2>
+        <p class="investment-subtitle">
+          Condição Especial para a Família e Damasceno
+        </p>
+        <div class="investment-card-vista">
+          <h5>Investimento à Vista (Pix ou Boleto)</h5>
+          <span class="price">R$ 90.000,00</span>
+        </div>
+        <p
+          class="list-section-content intro-paragraph centered"
+          style="
+            font-size: 0.9rem;
+            margin-top: 30px;
+            color: var(--text-light-secondary);
+          "
+        >
+          Esta opção oferece um valor diferenciado para pagamento único,
+          agilizando o início dos trabalhos e a concretização dos benefícios da
+          reestruturação.
+        </p>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-28" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">PRÓXIMOS PASSOS</h1>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-29" class="list-section-content">
+      <div class="container">
+        <h2 class="section-title">Próximos Passos</h2>
+        <p
+          class="intro-paragraph centered"
+          style="color: var(--text-light-primary); max-width: 850px"
+        >
+          A implementação da Holding Patrimonial, Empresa Operacional e a Transformação das Atuais Empresas para S.A. de Capital Fechado,
+          com a implementação de governança corporativa e organização
+          societária, é um investimento estratégico no futuro da sua empresa. A
+          W1 Consultoria Patrimonial está pronta para guiar você nessa jornada.
+        </p>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-29b" class="list-section-content">
+      <div class="container">
+        <h2 class="section-title">Próximos Passos Imediatos</h2>
+        <ul style="max-width: 700px; margin-top: 20px">
+          <li>
+            <span
+              >Enviar Informações Pessoais (para qualificação dos
+              sócios/acionistas).</span
+            >
+          </li>
+          <li>
+            <span>Confecção do Contrato de Prestação de Serviços W1.</span>
+          </li>
+          <li>
+            <span
+              >Assinatura do Contrato (digitalmente, via plataforma
+              segura).</span
+            >
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-29c" class="list-section-content">
+      <div class="container">
+        <h2 class="section-title">Início dos Trabalhos</h2>
+        <p
+          class="intro-paragraph centered"
+          style="
+            margin-top: 20px;
+            font-weight: bold;
+            color: var(--text-light-primary);
+            max-width: 850px;
+          "
+        >
+          Com a assinatura do contrato, iniciaremos imediatamente as análises
+          detalhadas e a elaboração de todos os documentos societários
+          necessários para a transformação.
+        </p>
+        <p
+          class="intro-paragraph centered"
+          style="
+            margin-top: 30px;
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-light-primary);
+            max-width: 850px;
+          "
+        >
+          Convidamos você a dar este passo decisivo para a perenidade e
+          prosperidade da
+          <strong>Grupo C&C</strong>
+        </p>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-30" class="sectional-cover-slide">
+      <div class="container">
+        <div class="kamby-logo-container">
+          <img
+            src="https://i.postimg.cc/wvgLyZ3L/Logo-Oficial-C-C.png"
+            alt="Logo Kamby"
+            class="kamby-logo-image"
+          />
+          <p class="kamby-company-name">
+            Grupo C&C Locações
+          </p>
+        </div>
+        <h1 class="sectional-cover-title">ENCERRAMENTO</h1>
+      </div>
+    </section>
+
+    <section
+      id="kamby-final-slide-31"
+      style="background-color: var(--bg-dark-secondary)"
+    >
+      <div class="container">
+        <h2 class="section-title">Agradecimentos</h2>
+        <p class="final-message-text">
+          Empresas que se estruturam com visão de futuro não apenas protegem o
+          que construíram — elas garantem que o legado sobreviva ao tempo, com
+          segurança, clareza e paz para todas as gerações.
+        </p>
+      </div>
+    </section>
+
+    <section id="kamby-final-slide-32" class="logo-only-slide">
+      <div class="container">
+        <img src="https://i.postimg.cc/MKD8hCs3/logo-w1.png" alt="W1 Logo" />
+      </div>
+    </section>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const capaTitleHighlight = document.querySelector(
+          "#kamby-final-slide-1 .capa-slide-title .highlight"
+        );
+        const titleElement = document.querySelector("title");
+
+        if (capaTitleHighlight) {
+          capaTitleHighlight.textContent = "Grupo C&C";
+        }
+        if (titleElement) {
+          document.title = `W1 Consultoria: Planejamento Estratégico – Grupo C&C`;
+        }
+
+        const sections = document.querySelectorAll(
+          "section[id^='kamby-final-slide-'], section[id^='kamby-grupo-organogram-slide'], section[id='viabrasil-gantt'], section[id='viabrasil-organogram-slide']"
+        );
+        const navLinks = document.querySelectorAll(".navigation .nav-link");
+        const scrollIndicator = document.querySelector(
+          ".scroll-indicator-capa"
+        );
+
+        if (scrollIndicator) {
+          setTimeout(() => {
+            scrollIndicator.style.animation =
+              "fadeInCapaScrollIndicator 1s ease forwards";
+            scrollIndicator.style.opacity = "0.8";
+          }, 500);
+        }
+
+        if (sections.length > 0 && navLinks.length > 0) {
+          const sectionObserverOptions = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 0.55,
+          };
+
+          const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const currentSectionId = entry.target.id;
+                let isLightSection =
+                  entry.target.classList.contains("light-section") ||
+                  entry.target.classList.contains("light-gray-section") ||
+                  (entry.target.id === "viabrasil-gantt" && // Check specific ID for Gantt
+                    entry.target.classList.contains("gantt-section")) ||
+                  (entry.target.id === "kamby-grupo-organogram-slide" && 
+                    entry.target.classList.contains("organogram-section"));
+
+
+                let isCover =
+                  entry.target.classList.contains("sectional-cover-slide") ||
+                  entry.target.classList.contains("capa-section") ||
+                  entry.target.classList.contains("logo-only-slide");
+
+                navLinks.forEach((link) => {
+                  link.classList.remove("active");
+                  const linkHref = link.getAttribute("href").substring(1);
+                  if (linkHref === currentSectionId) {
+                    link.classList.add("active");
+                  }
+
+                  // This logic should apply based on the active link's corresponding section
+                  if (link.classList.contains("active")) {
+                    if (isLightSection && !isCover) {
+                       navLinks.forEach((nl) => // Apply to all dots based on current section
+                        nl.classList.add("on-light-bg-dot")
+                      );
+                    } else {
+                       navLinks.forEach((nl) => // Apply to all dots based on current section
+                        nl.classList.remove("on-light-bg-dot")
+                      );
+                    }
+                  }
+                });
+              }
+            });
+          }, sectionObserverOptions);
+
+          sections.forEach((section) => {
+            sectionObserver.observe(section);
+          });
+          
+          // Initial check for the very first section
+            if (sections.length > 0) {
+                const firstSection = sections[0];
+                const firstSectionIsLight =
+                    firstSection.classList.contains("light-section") ||
+                    firstSection.classList.contains("light-gray-section") ||
+                    (firstSection.id === "viabrasil-gantt" && firstSection.classList.contains("gantt-section")) ||
+                    (firstSection.id === "kamby-grupo-organogram-slide" && firstSection.classList.contains("organogram-section"));
+                
+                const firstSectionIsCover =
+                    firstSection.classList.contains("sectional-cover-slide") ||
+                    firstSection.classList.contains("capa-section") ||
+                    firstSection.classList.contains("logo-only-slide");
+
+                if (navLinks[0] && navLinks[0].classList.contains("active")) { // Check if first link is active
+                    if (firstSectionIsLight && !firstSectionIsCover) {
+                        navLinks.forEach(nl => nl.classList.add("on-light-bg-dot"));
+                    } else {
+                        navLinks.forEach(nl => nl.classList.remove("on-light-bg-dot"));
+                    }
+                }
+            }
+        }
+      });
+    </script>
+  </body>
+</html>
